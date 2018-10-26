@@ -1,0 +1,12 @@
+<div><a href="/admin/new-post">new post</a></div>
+<h2> Admin - Index </h2>
+<ul>
+<%
+ posts.forEach((p) => {
+ let { title, status, type, slug, date} = p;
+%>
+    <li><%=title%> - <%=status%> - <%=type%> - <%=date%> <a href='/admin/delete-post?p=<%=slug%>'>delete</a> | <a href='/admin/edit-post?p=<%=slug%>'>edit</a></li>
+<%
+  });
+%>
+</ul>

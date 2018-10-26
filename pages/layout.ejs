@@ -1,0 +1,15 @@
+<% if (!page) { page = 'index'; } %>
+<% if (!title) { title = 'home'; } %>
+<!doctype html>
+<html>
+    <head>
+      <%- include('parts/meta', {title}); %>
+    </head>
+    <body>
+    <%- include('parts/header'); %>
+
+    <%- include(`${page}`); %>
+
+    <%- include('parts/footer'); %>
+    </body>
+</html>

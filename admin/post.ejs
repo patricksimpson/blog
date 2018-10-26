@@ -1,8 +1,9 @@
+<% const stateTitle = state === 'edit' ? 'Edit Post' : 'New Post';  %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-        <title>Add Post</title>
+        <title><%=stateTitle%></title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
         <style>
           .CodeMirror, .CodeMirror-scroll {
@@ -11,25 +12,25 @@
         </style>
     </head>
     <body>
-        <h2>Add Post</h2>
-          <form action="/new-post" method="post">
+        <h2><%=stateTitle%></h2>
+          <form action="/update-post" method="post">
             <div>
               <label for="title">Title</label>
               <div>
-                  <input type="text" name="title" id="title" />
+                  <input type="text" name="title" id="title" value="<%=post.title%>" />
               </div>
               <label for="message">Post (markdown)</label>
               <div>
-                  <textarea id="message" name="message"></textarea>
+                  <textarea id="message" name="message"><%=body%></textarea>
               </div>
               <div>
                 <label for="title">Summary</label>
                 <div>
-                    <input type="text" name="summary" id="summary" />
+                    <input type="text" name="summary" id="summary" value="<%=post.summary%>" />
                 </div>
                 <label for="title">Tags</label>
                 <div>
-                    <input type="text" name="tags" id="tags" />
+                    <input type="text" name="tags" id="tags" value="<%=post.tags%>"/>
                 </div>
                 <div>
                     <label for="title">Type</label>
