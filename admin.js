@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send('-_-'));
+app.use(express.static('build'))
 
 app.use('/admin/static', express.static('admin/static'))
 

@@ -7,6 +7,16 @@ const path = require('path');
 const moment = require('moment');
 const showdown  = require('showdown');
 
+const Typography = require('typography')
+const oceanBeachTheme = require('typography-theme-ocean-beach')
+oceanBeachTheme.overrideThemeStyles = options => ({
+  a: {
+    transition: 'all 0.5s ease',
+  },
+})
+
+const typography = new Typography(oceanBeachTheme)
+
 let postData = [];
 const layoutFile = path.join(__dirname, 'pages') + '/layout.ejs';
 
@@ -35,13 +45,14 @@ const compilePages = async function() {
     }
   ];
 
-  console.log('[PAGES]');
+  console.log('[PAGES] ');
 
   pages.forEach(p => {
     const { page, title, data } = p;
     if (typeof data === 'undefined') {
       p.data = null;
     }
+    p.typography = typography;
     ejs.renderFile(layoutFile, p, function(err, str){
       if(err) {
         console.log(err);
@@ -79,7 +90,7 @@ const compilePosts = async function() {
       let html = converter.makeHtml(md);
       fs.ensureDirSync(`${distPath}/${slug}`);
       console.log(`building ${slug}`);
-      ejs.renderFile(layoutFile, {page: 'post', title, data: html}, (err, str) => {
+      ejs.renderFile(layoutFile, { typography: typography, page: 'post', title, data: html}, (err, str) => {
         if (err) { console.log(err); } else {
           fs.writeFile(`${distPath}/${slug}/index.html`, str);
         }

@@ -6,18 +6,20 @@
 <html>
   <head>
   <%- include('parts/meta', {title}); %>
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+  <style><%- typography.toString() %></style>
   <link href="/static/css/styles.css" rel="stylesheet">
   </head>
   <body>
     <%- include('parts/header'); %>
 
+    <div class="main">
     <% if (data) { %>
       <%- include(`${page}`, data); %>
     <% } else { %>
       <%- include(`${page}`); %>
     <% } %>
+    </div>
 
-      <%- include('parts/footer'); %>
+    <%- include('parts/footer'); %>
   </body>
 </html>
