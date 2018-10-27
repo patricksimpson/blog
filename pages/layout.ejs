@@ -1,15 +1,21 @@
-<% if (!page) { page = 'index'; } %>
-<% if (!title) { title = 'home'; } %>
+<%
+   if (!page) { page = 'index'; }
+   if (!title) { title = 'home'; }
+%>
 <!doctype html>
 <html>
-    <head>
-      <%- include('parts/meta', {title}); %>
-    </head>
-    <body>
+  <head>
+<%- include('parts/meta', {title}); %>
+  </head>
+  <body>
     <%- include('parts/header'); %>
 
-    <%- include(`${page}`); %>
+    <% if (data) { %>
+      <%- include(`${page}`, data); %>
+    <% } else { %>
+      <%- include(`${page}`); %>
+    <% } %>
 
     <%- include('parts/footer'); %>
-    </body>
+  </body>
 </html>
