@@ -5,7 +5,9 @@
 <!doctype html>
 <html>
   <head>
-<%- include('parts/meta', {title}); %>
+  <%- include('parts/meta', {title}); %>
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+  <link href="/static/css/styles.css" rel="stylesheet">
   </head>
   <body>
     <%- include('parts/header'); %>
@@ -16,6 +18,6 @@
       <%- include(`${page}`); %>
     <% } %>
 
-    <%- include('parts/footer'); %>
+      <%- include('parts/footer'); %>
   </body>
 </html>
