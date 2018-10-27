@@ -59,8 +59,7 @@ app.get('/admin/delete-post', (req, res) => {
     const p = req.query.p;
     let buffer = `deleting ${p}`;
     fs.removeSync(`./posts/${p}`)
-    console.log(buffer);
-    res.send(buffer);
+    res.redirect('/admin');
 });
 
 app.post('/update-post', async (req, res) => {
@@ -118,7 +117,6 @@ app.post('/add-post', async (req, res) => {
     if (!exists) {
       buffer = `<div><a href="/admin">admin</a></div>${buffer}`;
       res.send(`${buffer}<div>Got post! ${slug}, created</div>`);
-      res.redirect('/admin');
       try {
           await fs.ensureDir(newPostDir);
           fs.outputFile(`${newPostDir}/index.md`, message);

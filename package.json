@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "browserify ./admin/index.js -o ./admin/static/bundle.js & node admin.js",
-    "watch": "watchify ./admin/index.js -o ./admin/static/bundle.js & nodemon admin.js"
+    "watch": "run-p watchify ./admin/index.js -o ./admin/static/bundle.js & nodemon admin.js --watch build --watch admin & nodemon build.js --watch pages --watch posts --watch static"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "moment": "^2.22.2",
+    "npm-run-all": "^4.1.3",
     "showdown": "^1.8.7",
     "simplemde": "^1.11.2",
     "slugify": "^1.3.1",
