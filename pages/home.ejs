@@ -1,0 +1,12 @@
+<div class="main">
+<% data.posts.forEach((post) => { %>
+  <div class="post-item post-item-front">
+    <a href="<%= post.slug%>" class="post-link">
+      <h3 class="post-title"><%= post.title %></h3>
+      <span class="post-date"><%= post.date %></span>
+      <p><%= post.summary %></p>
+    </a>
+  </div>
+<% }) %>
+<a href="/posts">Older Posts</Link>
+</div>

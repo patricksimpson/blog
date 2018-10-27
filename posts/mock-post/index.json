@@ -1,0 +1,9 @@
+{
+    "post": {
+        "title": "Mock Post",
+        "type": "post",
+        "status": "draft",
+        "createDate":"2018-09-09T15:08:53.891Z",
+        "updateDate":"2018-09-09T15:08:53.891Z"
+    }
+}
