@@ -8,6 +8,7 @@ const path = require('path');
 const moment = require('moment');
 const app = express();
 const port = 3000;
+const shell = require('shelljs');
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -20,6 +21,11 @@ app.use('/admin/static', express.static('admin/static'))
 
 app.get('/admin/new-post', (req, res) => {
   res.sendFile(path.join(__dirname + '/admin/new-post.html'));
+});
+
+app.get('/admin/build-posts', (req, res) => {
+  shell.exec('node build');
+  res.redirect('/admin?refreshed=true');
 });
 
 app.get('/admin/edit-post', (req, res) => {
@@ -59,16 +65,27 @@ app.get('/admin/delete-post', (req, res) => {
     const p = req.query.p;
     let buffer = `deleting ${p}`;
     fs.removeSync(`./posts/${p}`)
-    res.redirect('/admin');
+    res.redirect('/admin?deleted=true');
 });
 
 app.post('/update-post', async (req, res) => {
-    const {title, message, type, status, summary, tags } = req.body;
+    const {title, message, type, status, summary, tags, oldTitle, createDate } = req.body;
     console.log('Got post', req.body);
     let buffer = '';
+
     const slug = slugify(title, { lower: true });
-    const postDir = `./posts/${slug}`;
-    const exists = await fs.pathExists(postDir);
+    const oldSlug = slugify(oldTitle, { lower: true });
+
+    let postDir = `./posts/${oldSlug}`;
+    let newPostDir = `./posts/${slug}`;
+
+    let exists = await fs.pathExists(path.join(__dirname, newPostDir));
+    if (!exists && slug !== oldSlug) {
+      console.log('RENAMING POST!');
+      fs.moveSync(path.join(__dirname, postDir), path.join(__dirname, newPostDir));
+      postDir = newPostDir;
+      exists = await fs.pathExists(path.join(__dirname, postDir));
+    }
     const post = {
         title,
         slug,
@@ -76,25 +93,25 @@ app.post('/update-post', async (req, res) => {
         status,
         summary,
         tags,
+        createDate: createDate,
         updateDate: new Date()
     };
     if (exists) {
       let p = fs.readJsonSync(`${postDir}/index.json`);
-      post['createDate'] = p.createDate;
-      res.send(`${buffer}<div>updating post! ${slug}</div>`);
-      buffer = `<div><a href="/admin">admin</a></div>${buffer}`;
+      console.log('SAVING DATA!');
       try {
         fs.outputFile(`${postDir}/index.md`, message);
         fs.writeJSONSync(`${postDir}/index.json`, { post: post });
-        res.redirect('/admin');
+        res.redirect('/admin/build-posts?success=true&updated=true');
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     } else {
       res.send(`${slug} doesn't exist!`);
-      res.send(`${buffer}<div>updated post! ${slug}</div>`);
       buffer = `<div><a href="/admin">admin</a></div>${buffer}`;
+      return;
     }
+    res.redirect('/admin');
 });
 
 app.post('/add-post', async (req, res) => {
@@ -115,8 +132,9 @@ app.post('/add-post', async (req, res) => {
         updateDate: new Date()
     };
     if (!exists) {
-      buffer = `<div><a href="/admin">admin</a></div>${buffer}`;
-      res.send(`${buffer}<div>Got post! ${slug}, created</div>`);
+      buffer = `<div><a href="/admin">admin</a></div>${buffer}<br/>`;
+      buffer = `${buffer}<br /><a href="${slug}">view post</a>/></div>`;
+      res.redirect('/admin/build-posts?success=true&newpost=true');
       try {
           await fs.ensureDir(newPostDir);
           fs.outputFile(`${newPostDir}/index.md`, message);

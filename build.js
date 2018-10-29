@@ -18,7 +18,7 @@ oceanBeachTheme.overrideThemeStyles = options => ({
 const typography = new Typography(oceanBeachTheme)
 
 let postData = [];
-const layoutFile = path.join(__dirname, 'pages') + '/layout.ejs';
+const layoutFile = path.join(__dirname, 'src/pages') + '/layout.ejs';
 
 if(fs.existsSync('build')) {
   fs.removeSync('build');
@@ -51,6 +51,16 @@ const compilePages = async function() {
     const { page, title, data } = p;
     if (typeof data === 'undefined') {
       p.data = null;
+    } else {
+      if(p.data && p.data.posts) {
+        console.log(p.data.posts);
+        // sort posts by date.
+        p.data.posts.sort(function(a,b){
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return new Date(b.createDate) - new Date(a.createDate);
+        });
+      }
     }
     p.typography = typography;
     ejs.renderFile(layoutFile, p, function(err, str){
@@ -79,18 +89,22 @@ const compilePosts = async function() {
   await glob(`${srcPath}/**/*.json`, (er, files) => {
     files.forEach( f => {
       let { post } = fs.readJsonSync(f);
-      let { title, slug, summary, createAt, updatedAt } = post;
+      let { title, slug, summary, createDate, updatedAt } = post;
+      const date = moment(createDate).format('MMMM Do YYYY');
+      post.date = date;
+
       if(!slug) {
         slug = slugify(post.title, { lower: true });
         post.slug = slug;
       }
+
       postData.push(post);
       let buildPath = path.join(__dirname, slug);
       let md = fs.readFileSync(`${srcPath}/${slug}/index.md`, 'utf8');
       let html = converter.makeHtml(md);
       fs.ensureDirSync(`${distPath}/${slug}`);
       console.log(`building ${slug}`);
-      ejs.renderFile(layoutFile, { typography: typography, page: 'post', title, data: html}, (err, str) => {
+      ejs.renderFile(layoutFile, { typography: typography, page: 'post', title, date, data: html}, (err, str) => {
         if (err) { console.log(err); } else {
           fs.writeFile(`${distPath}/${slug}/index.html`, str);
         }
@@ -100,6 +114,6 @@ const compilePosts = async function() {
   });
 }
 
-fs.copySync(path.join(__dirname, 'static'), path.join(__dirname, 'build', 'static'));
+fs.copySync(path.join(__dirname, 'src/static'), path.join(__dirname, 'build', 'static'));
 
 compilePosts();
