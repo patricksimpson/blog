@@ -5,10 +5,28 @@ const slugify = require('slugify')
 const glob = require('glob');
 const path = require('path');
 const moment = require('moment');
-const showdown  = require('showdown');
+var myMarked = require('marked');
+const date = require('date-and-time');
+const fm = require('front-matter');
+
+myMarked.setOptions({
+  renderer: new myMarked.Renderer(),
+  highlight: function(code) {
+    return require('highlight.js').highlightAuto(code).value;
+  },
+  pedantic: false,
+  gfm: true,
+  tables: true,
+  breaks: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false,
+  xhtml: false
+});
 
 const Typography = require('typography')
 const oceanBeachTheme = require('typography-theme-ocean-beach')
+
 oceanBeachTheme.overrideThemeStyles = options => ({
   a: {
     transition: 'all 0.5s ease',
@@ -18,6 +36,7 @@ oceanBeachTheme.overrideThemeStyles = options => ({
 const typography = new Typography(oceanBeachTheme)
 
 let postData = [];
+let rss = [];
 const layoutFile = path.join(__dirname, 'src/pages') + '/layout.ejs';
 
 if(fs.existsSync('build')) {
@@ -27,10 +46,32 @@ fs.ensureDirSync('build');
 
 
 const compilePages = async function() {
+
+  // sort posts by date.
+  postData.sort(function(a,b){
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(b.date) - new Date(a.date);
+  });
+
+  rss.sort(function(a, b) {
+    return new Date(b.meta.date) - new Date(a.meta.date);
+  });
+
+  // Take the top 6
+  let latestPosts = postData.splice(0,6);
+
   const pages = [
     {
       page: 'home',
       title: 'Home',
+      data: {
+        posts: latestPosts
+      }
+    },
+    {
+      page: 'posts',
+      title: 'Archive',
       data: {
         posts: postData
       }
@@ -38,10 +79,6 @@ const compilePages = async function() {
     {
       page: 'about',
       title: 'About'
-    },
-    {
-      page: 'pages',
-      title: 'Older Posts'
     }
   ];
 
@@ -49,17 +86,16 @@ const compilePages = async function() {
 
   pages.forEach(p => {
     const { page, title, data } = p;
+
+    p.slug = page;
+    if(page === 'home') {
+      p.slug = '';
+    }
     if (typeof data === 'undefined') {
       p.data = null;
     } else {
       if(p.data && p.data.posts) {
-        console.log(p.data.posts);
-        // sort posts by date.
-        p.data.posts.sort(function(a,b){
-          // Turn your strings into dates, and then subtract them
-          // to get a value that is either negative, positive, or zero.
-          return new Date(b.createDate) - new Date(a.createDate);
-        });
+        console.log(`Compiling ${p.data.posts.length} posts`);
       }
     }
     p.typography = typography;
@@ -77,36 +113,45 @@ const compilePages = async function() {
       }
     });
   });
+  console.log('Building RSS...');
+  let buildDate = new Date().toUTCString();
+  ejs.renderFile('src/pages/rss.ejs', {data: rss, buildDate}, function(err, str) {
+    fs.writeFileSync('build/rss.xml', str);
+  });
 }
 
 const compilePosts = async function() {
   console.log('[POSTS]');
 
-  const srcPath = './posts';
+  const srcPath = '/Users/patrick/posts';
   const distPath = './build';
-  const converter = new showdown.Converter();
 
-  await glob(`${srcPath}/**/*.json`, (er, files) => {
+  await glob(`${srcPath}/**/*.md`, (er, files) => {
     files.forEach( f => {
-      let { post } = fs.readJsonSync(f);
-      let { title, slug, summary, createDate, updatedAt } = post;
-      const date = moment(createDate).format('MMMM Do YYYY');
-      post.date = date;
-
-      if(!slug) {
-        slug = slugify(post.title, { lower: true });
-        post.slug = slug;
-      }
-
-      postData.push(post);
-      let buildPath = path.join(__dirname, slug);
-      let md = fs.readFileSync(`${srcPath}/${slug}/index.md`, 'utf8');
-      let html = converter.makeHtml(md);
-      fs.ensureDirSync(`${distPath}/${slug}`);
+      if (f.indexOf('template') > -1) { return; }
+      let md = fs.readFileSync(f, 'utf8');
+      let raw = fm(md);
+      let meta = raw.attributes;
+      let html = myMarked(raw.body);
+      let slug = path.basename(f, '.md');
+      let {
+        title,
+        summary,
+        date: createDate,
+        tags
+      } = meta;
+      let buildPath = path.join(__dirname, "build", "posts", slug);
+      fs.ensureDirSync(`${buildPath}`);
       console.log(`building ${slug}`);
-      ejs.renderFile(layoutFile, { typography: typography, page: 'post', title, date, data: html}, (err, str) => {
+      const momentDate = moment(Date.parse(createDate)).format('MMMM Do YYYY');
+      meta.pubDate = new Date(createDate).toUTCString();
+      meta.postDate = momentDate;
+      meta.slug = slug;
+      postData.push(meta);
+      rss.push({meta, content: html});
+      ejs.renderFile(layoutFile, { typography: typography, page: 'post', slug: `posts/${slug}`, title, date: momentDate, data: html }, (err, str) => {
         if (err) { console.log(err); } else {
-          fs.writeFile(`${distPath}/${slug}/index.html`, str);
+          fs.writeFileSync(`${buildPath}/index.html`, str, 'utf8');
         }
       });
     });

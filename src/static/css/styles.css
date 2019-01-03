@@ -172,7 +172,7 @@ h3 {
 }
 
 .header {
-  max-width: 960px;
+  max-width: 720px;
   margin: 0 auto;
   display: flex;
   padding: 1rem;
@@ -180,9 +180,18 @@ h3 {
 }
 
 .main, .footer {
-  max-width: 960px;
+  max-width: 720px;
   margin: 0 auto;
+  margin-bottom: 1rem;
   padding: 0 1rem;
+  font-size: 18px;
+}
+
+.footer {
+  padding: 1rem;
+  font-size: 1em;
+  border-top: 1px solid #eee;
+  color: #777;
 }
 
 .logo-link-container {
@@ -292,4 +301,23 @@ h3 {
   color: #999;
   font-size: 0.85rem;
   margin-bottom: 1.2em;
+}
+
+.archive li {
+  margin-bottom: 0.5em;
+}
+
+a {
+  color: #2e4e71;
+}
+a:hover {
+  color: #547498;
+}
+
+.archive li a .post-title {
+  color: #2e4e71;
+}
+
+.archive li a:hover .post-title {
+  color: #547498;
 }

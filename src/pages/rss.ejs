@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>patricksimpson.me Post Feed</title>
+        <link>http://patricksimpson.me/</link>
+        <description>Posts for patricksimpson.me</description>
+        <lastBuildDate><%= buildDate %></lastBuildDate>
+        <language>en-us</language>
+        <% data.forEach((post) => { %>
+        <item>
+            <title><%= post.meta.title %></title>
+            <link>http://patricksimpson.me/posts/<%= post.meta.slug %></link>
+            <guid>http://patricksimpson.me/posts/<%= post.meta.slug %></guid>
+            <pubDate><%= post.meta.pubDate %></pubDate>
+            <description><![CDATA[<%= post.meta.summary %>]]></description>
+            <content><![CDATA[<%= post.content %>]]></content>
+        </item>
+        <% }) %>
+    </channel>
+</rss>
