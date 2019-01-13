@@ -140,11 +140,11 @@ pre[class*="language-"] {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  font-size: 1.15em;
 }
 
 h1 {
   margin: 0.4rem 0;
-  margin-bottom: 1.6rem;
   background-image: none;
 }
 
@@ -184,7 +184,6 @@ h3 {
   margin: 0 auto;
   margin-bottom: 1rem;
   padding: 0 1rem;
-  font-size: 18px;
 }
 
 .footer {
@@ -201,7 +200,7 @@ h3 {
 
 .site-title {
   color: #f1f1f1;
-  font-size: 2rem;
+  font-size: 2em;
   font-family: 'Roboto Slab',sans-serif;
   text-decoration: none;
   background-image: none;
@@ -276,18 +275,9 @@ h3 {
 .post-title {
   display: inline-block;
   color: #222;
+  margin-right: 0.75em;
 }
 
-.post-date{
-  display: inline-block;
-  color: #999;
-  font-size: 0.85rem;
-  margin-left: 1rem;
-}
-
-.post-page-title {
-  margin-bottom: 0.6em;
-}
 .post-link-old {
   padding: 0.25em 0;
 }
@@ -320,4 +310,27 @@ a:hover {
 
 .archive li a:hover .post-title {
   color: #547498;
+}
+
+.tag-title {
+  margin-bottom: 0.75em;
+}
+
+.post-meta {
+  margin-bottom: 1em;
+}
+
+.post-tags {
+  display: inline-block;
+  font-size: 0.7em;
+}
+
+.post-page-title {
+  margin-bottom: 0.6em;
+}
+
+.post-date{
+  display: inline-block;
+  color: #999;
+  font-size: 0.85rem;
 }

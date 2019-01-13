@@ -1,12 +1,23 @@
 <%
+  let metaSummary = false;
+  let metaTitle = title;
    if (!page) { page = 'index'; }
    if (!title) { title = 'home'; }
+   if (title === 'Home') {
+       metaTitle = false;
+   }
    if (!slug) { slug = ''; }
+
+   if (!summary) {
+       metaSummary = false
+   } else {
+       metaSummary = summary;
+  }
 %>
 <!doctype html>
 <html>
   <head>
-    <%- include('parts/meta', {title, slug}); %>
+    <%- include('parts/meta', { title, metaTitle, slug, metaSummary }); %>
     <style><%- typography.toString() %></style>
     <link href="/static/css/styles.css" rel="stylesheet">
   </head>

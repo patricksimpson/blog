@@ -1,5 +1,18 @@
 <div class="post">
   <h1 class="post-title"><%= title %></h1>
-  <div class="post-date"><%= date %></div>
+  <div class="post-meta">
+    <div class="post-date"><%= date %></div>
+    <div class="post-tags">
+    <% if(tags) {
+        tags.forEach((t, i) => {
+    %>
+          <a href="/tag/<%= t %>/"><%= t %></a><% if(i < tags.length - 1) {%>,<% } %>
+    <% });
+      }
+    %>
+    </div>
+  </div>
+  <div class="post-body" >
   <%- data %>
+  </div>
 </div>

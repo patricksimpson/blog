@@ -6,12 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "run-p dev server",
-    "dev": "nodemon --watch src --watch build.js -e css,ejs,js build",
+    "dev": "nodemon --watch /Users/patrick/posts --watch src --watch build.js -e css,ejs,js,md build",
     "build": "node build.js",
     "server": "node server.js",
     "deploy:deploy": "npm run build:deploy",
     "build:deploy": "npm run build && npm run deploy",
-    "deploy": "aws s3 cp build/ s3://patricksimpson.me/ --recursive"
+    "deploy": "npm run push && npm run clearcache",
+    "sync": "aws s3 sync build/ s3://patricksimpson.me/",
+    "push": "aws s3 cp build/ s3://patricksimpson.me/ --recursive",
+    "clearcache": "aws cloudfront create-invalidation --distribution-id=EHEGKY5SSPRMA --paths '/*'"
   },
   "author": "Patrick Simpson",
   "license": "ISC",

@@ -1,7 +1,13 @@
 <title>Patrick Simspon <%=title%></title>
+<%
+let meta = false;
+if(metaTitle && metaSummary) {
+    meta = `${metaTitle}: ${metaSummary}`
+}
+%>
 <meta
     name="description"
-    content="The blog of Patrick Simpson; Software, Development, JavaScript."
+    content="<%= meta || 'The blog of Patrick Simpson: Software, Development, JavaScript.' %>"
 />
 <meta
     name="keywords"
@@ -9,15 +15,18 @@
 />
 <meta
     name="twitter:title"
-    content="The blog of Patrick Simpson; Software, Development, JavaScript."
+    content="<%= metaTitle || 'The blog of Patrick Simpson' %>"
 />
 <meta
     name="twitter:description"
-    content="Javascript, Development, Web Development, Internet"
+    content="<%= metaSummary || 'Javascript, Development, Web Development, Internet' %>"
 />
 <meta name="theme-color" content="#ffffff" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@patrexsimpson" />
 <meta charset="utf-8"/>
+<meta name="robots" content="index, follow">
+<meta name="author" content="Patrick Simpson" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href="http://patricksimpson.me/rss.xml" title="patricksimpson.me: Post Feed" rel="alternate" type="application/rss+xml" />
 <link rel="canonical" href="http://patricksimpson.me/<%=slug%>" />
