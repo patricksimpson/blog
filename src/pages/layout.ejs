@@ -23,13 +23,12 @@
   </head>
   <body>
     <%- include('parts/header'); %>
-
     <div class="main">
-    <% if (data) { %>
-      <%- include(`${page}`, data); %>
-    <% } else { %>
-      <%- include(`${page}`); %>
-    <% } %>
+      <% if (data) { %>
+        <%- include(`${page}`, data); %>
+      <% } else { %>
+        <%- include(`${page}`); %>
+      <% } %>
     </div>
 
     <%- include('parts/footer'); %>

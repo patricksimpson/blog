@@ -1,0 +1,20 @@
+{
+  "name": "static-blog",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Patrick Simpson"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/patricksimpson/blog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lunr": "^2.3.5"
+  }
+}

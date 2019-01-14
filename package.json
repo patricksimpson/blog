@@ -5,28 +5,59 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p dev server",
-    "dev": "nodemon --watch /Users/patrick/posts --watch src --watch build.js -e css,ejs,js,md build",
-    "build": "node build.js",
+    "start": "run-p dev server meta",
+    "dev": "npm run meta && nodemon --watch /Users/patrick/posts --watch src --watch build.js -e css,ejs,js,md npm run build",
+    "build": "node build.js && npm run minify && cp ./src/meta/*.* ./build",
+    "build:production": "npm run minify && npm run cachebust",
     "server": "node server.js",
     "deploy:deploy": "npm run build:deploy",
-    "build:deploy": "npm run build && npm run deploy",
-    "deploy": "npm run push && npm run clearcache",
+    "build:deploy": "npm run build:production && npm run deploy",
+    "build:production": "npm run minify && npm run cachebust",
+    "deploy:build": "npm run build:deploy",
+    "deploy": "npm run push && npm run expires && npm run clearcache ",
     "sync": "aws s3 sync build/ s3://patricksimpson.me/",
     "push": "aws s3 cp build/ s3://patricksimpson.me/ --recursive",
-    "clearcache": "aws cloudfront create-invalidation --distribution-id=EHEGKY5SSPRMA --paths '/*'"
+    "expires": "npm run expires:static && npm run expires:f && npm run expires:ff && npm run expires:ga",
+    "expires:static": "aws s3 cp s3://patricksimpson.me/static s3://patricksimpson.me/static --recursive  --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000",
+    "expires:f": "aws s3 cp s3://patricksimpson.me/favicon-32x32.png s3://patricksimpson.me/favicon-32x32.png --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000",
+    "expires:ff": "aws s3 cp s3://patricksimpson.me/favicon-16x16.png s3://patricksimpson.me/favicon-16x16.png --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000",
+    "expires:site": "aws s3 cp s3://patricksimpson.me/site.webmanifest s3://patricksimpson.me/site.webmanifest --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000",
+    "expires:ga": "aws s3 cp s3://patricksimpson.me/static/js/ga.gz.js s3://patricksimpson.me/static/js/ga.gz.js --acl public-read  --metadata-directive REPLACE --content-encoding gzip --metadata-directive REPLACE --cache-control max-age=259200",
+    "clearcache": "aws cloudfront create-invalidation --distribution-id=EHEGKY5SSPRMA --paths '/*'",
+    "transpile": "npm run clean:js && babel ./src/static/js/search.js -o ./dist/js/search.js",
+    "meta": "cp ./src/meta/*.* ./build",
+    "minify": " npm run transpile && npm run minify:js && npm run minify:css",
+    "minify:css": "npm run clean:css && uglifycss ./src/static/css/styles.css --output ./dist/css/styles.css",
+    "minify:js": "npm run minify:search && npm run minify:lunr && npm run copy:ga",
+    "minify:search": "uglifyjs dist/js/search.js -o ./dist/js/search.js",
+    "minify:lunr": "npm run copy:lunr && uglifyjs ./dist/js/lunr.js -o ./dist/js/lunr.js",
+    "copy:lunr": "cp ./bower_components/lunr/lunr.js ./dist/js/lunr.js ",
+    "copy:ga": "cp ./bower_components/ga/ga.gz.js ./dist/js/ga.gz.js ",
+    "clean:js": "rm -rf ./dist/js && mkdir -p ./dist/js",
+    "clean:css": "rm -rf ./dist/css && mkdir -p ./dist/css",
+    "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static",
+    "cachebust": "cachebust && node build.js && npm run meta && npm run copy:dist && cachebust --restore"
   },
   "author": "Patrick Simpson",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@sparkbox/cachebust": "^0.1.1",
+    "bower": "^1.8.4",
     "browserify": "^16.2.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "front-matter": "^3.0.1",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.3",
+    "lunar": "0.0.3",
+    "lunr": "^2.3.5",
     "marked": "^0.6.0",
     "nodemon": "^1.18.9",
+    "uglify-js": "^3.4.9",
+    "uglifycss": "0.0.29",
     "watchify": "^3.11.0"
   },
   "dependencies": {
@@ -43,5 +74,15 @@
     "strtotime": "^1.0.0",
     "typography": "^0.16.17",
     "typography-theme-ocean-beach": "^0.15.11"
+  },
+  "cachebust": {
+    "source": [
+      "dist/css/styles.css",
+      "dist/js/search.js"
+    ],
+    "target": [
+      "src/pages/layout.ejs",
+      "src/pages/parts/footer.ejs"
+    ]
   }
 }

@@ -1,0 +1,12 @@
+[
+<% data.forEach((post) => { %>
+  {
+    "name": "<%= post.meta.title %>",
+    "slug": "https://patricksimpson.me/posts/<%= post.meta.slug %>",
+    "guid": "https://patricksimpson.me/posts/<%= post.meta.slug %>",
+    "date": "<%= post.meta.pubDate %>",
+    "description": "<%= post.meta.summary %>",
+    "content": "<%= post.content %>"
+  },
+<% }); %>
+]

@@ -5,6 +5,7 @@ const path = require('path');
 const moment = require('moment');
 const myMarked = require('marked');
 const fm = require('front-matter');
+const lunr = require('lunr');
 
 /* Config Settings */
 
@@ -92,6 +93,11 @@ const compilePages = async function() {
       }
     },
     {
+      page: 'search',
+      title: 'Search',
+      summary: false
+    },
+    {
       page: 'about',
       title: 'About',
       summary: false
@@ -135,7 +141,7 @@ const compilePages = async function() {
   Object.keys(postTags).forEach( t => {
     // const { page, data } = p;
     p = {};
-    p.slug = t;
+    p.slug = t.toLowerCase();
     p.page = 'tag';
     p.data = postTags[t];
     p.data.posts.reverse();
@@ -156,9 +162,51 @@ const compilePages = async function() {
   console.log('[RSS]');
 
   let buildDate = new Date().toUTCString();
-  ejs.renderFile('src/pages/rss.ejs', {data: rss, buildDate}, function(err, str) {
+  ejs.renderFile('src/pages/rss.ejs', { data: rss, buildDate }, (err, str) => {
     fs.writeFileSync('build/rss.xml', str);
+    if(!err) {
+      console.log('rss built!');
+    } else {
+      console.log(err, 'something went wrong with rss...');
+    }
   });
+
+  // Lunr Search Feed
+  let jsonFeed = [];
+  let store = {};
+  rss.forEach((post) => {
+    let doc = {
+      "title": post.meta.title,
+      "slug": `${post.meta.slug}`,
+      "href": `https://patricksimpson.me/posts/${post.meta.slug}`,
+      "date": `${post.meta.pubDate}`,
+      "postDate": `${post.meta.postDate}`,
+      "summary": `${post.meta.summary}`,
+      "body": `${post.content}`
+    };
+    jsonFeed.push(doc);
+  });
+
+  const searchIndex = lunr(function() {
+    this.field('title', { boost: 10 });
+    this.field('summary', { boost: 5 });
+    this.field('body');
+    this.ref('href');
+    jsonFeed.forEach( doc => {
+      store[doc.href] = {
+        'title': doc.title,
+        'date': doc.postDate
+      };
+      this.add(doc);
+    });
+  });
+  fs.writeFileSync('build/lunr.json', JSON.stringify({
+    index: searchIndex.toJSON(),
+    store: store
+  }));
+
+  fs.writeFileSync('build/index.json', JSON.stringify(jsonFeed));
+
 }
 
 const compilePosts = async function() {
@@ -205,7 +253,7 @@ const compilePosts = async function() {
         postTags['uncategorized'].posts.push(meta);
       }
       postData.push(meta);
-      rss.push({meta, content: html});
+      rss.push({meta, content: raw.body});
       ejs.renderFile(layoutFile, { typography: typography, page: 'post', summary,  slug: `posts/${slug}`, title, date: momentDate, data: html, tags }, (err, str) => {
         if (err) { console.log(err); } else {
           fs.writeFileSync(`${buildPath}/index.html`, str, 'utf8');
@@ -216,6 +264,12 @@ const compilePosts = async function() {
   });
 }
 
-fs.copySync(path.join(__dirname, 'src/static'), path.join(__dirname, 'build', 'static'));
+function compileStatic() {
+  fs.copySync(path.join(__dirname, 'src/static'), path.join(__dirname, 'build', 'static'));
+  fs.copySync(path.join(__dirname, 'bower_components/lunr/lunr.js'), path.join(__dirname, 'build', 'static', 'js', 'lunr.js'));
+  fs.copySync(path.join(__dirname, 'bower_components/ga/ga.js'), path.join(__dirname, 'build', 'static', 'js', 'ga.js'));
+  fs.copySync(path.join(__dirname, 'src/meta'), path.join(__dirname, 'build'));
+}
 
 compilePosts();
+compileStatic();
