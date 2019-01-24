@@ -188,9 +188,10 @@ h3 {
 
 .footer {
   padding: 1rem;
-  font-size: 1em;
+  font-size: 0.9em;
   border-top: 1px solid #eee;
   color: #777;
+  display: flex;
 }
 
 .logo-link-container {
@@ -337,4 +338,21 @@ a:hover {
 
 .search-body {
   margin: 1em 0;
+}
+
+.meta-footer {
+  padding: 0;
+  margin-left: auto;
+}
+
+.meta-footer li {
+  display: inline-block;
+}
+
+.meta-footer li::after {
+  content: " | ";
+}
+
+.meta-footer li:last-child::after {
+  content: "";
 }

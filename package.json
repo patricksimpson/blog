@@ -5,16 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p dev server meta",
-    "dev": "npm run meta && nodemon --watch /Users/patrick/posts --watch src --watch build.js -e css,ejs,js,md npm run build",
-    "build": "node build.js && npm run minify && cp ./src/meta/*.* ./build",
-    "build:production": "npm run minify && npm run cachebust",
-    "server": "node server.js",
+    "start": "LOCAL=true run-p dev server meta",
+    "dev": "nodemon --watch ~/posts --watch src --watch index.js -e css,ejs,js,md index.js",
+    "build": "node index.js && npm run meta",
+    "build:production": "npm run build && npm run minify && npm run cachebust",
+    "server": "LOCAL=true node server.js",
     "deploy:deploy": "npm run build:deploy",
     "build:deploy": "npm run build:production && npm run deploy",
-    "build:production": "npm run minify && npm run cachebust",
     "deploy:build": "npm run build:deploy",
-    "deploy": "npm run push && npm run expires && npm run clearcache ",
+    "deploy": "npm run push && npm run expires && npm run clearcache && cachebust --restore",
     "sync": "aws s3 sync build/ s3://patricksimpson.me/",
     "push": "aws s3 cp build/ s3://patricksimpson.me/ --recursive",
     "expires": "npm run expires:static && npm run expires:f && npm run expires:ff && npm run expires:ga",
@@ -36,7 +35,7 @@
     "clean:js": "rm -rf ./dist/js && mkdir -p ./dist/js",
     "clean:css": "rm -rf ./dist/css && mkdir -p ./dist/css",
     "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static",
-    "cachebust": "cachebust && node build.js && npm run meta && npm run copy:dist && cachebust --restore"
+    "cachebust": "cachebust && npm run meta && npm run copy:dist"
   },
   "author": "Patrick Simpson",
   "license": "ISC",
@@ -44,7 +43,6 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
-    "@sparkbox/cachebust": "^0.1.1",
     "bower": "^1.8.4",
     "browserify": "^16.2.3",
     "ejs": "^2.6.1",
@@ -61,12 +59,18 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "@sparkbox/cachebust": "^0.2.3",
+    "adm-zip": "^0.4.13",
     "body-parser": "^1.18.3",
     "date-and-time": "^0.6.3",
+    "dotenv": "^6.2.0",
+    "globby": "^9.0.0",
     "highlight.js": "^9.13.1",
     "moment": "^2.22.2",
     "node-static": "^0.7.11",
     "npm-run-all": "^4.1.5",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "shelljs": "^0.8.2",
     "showdown": "^1.8.7",
     "simplemde": "^1.11.2",
@@ -81,8 +85,7 @@
       "dist/js/search.js"
     ],
     "target": [
-      "src/pages/layout.ejs",
-      "src/pages/parts/footer.ejs"
+      "build/**/index.html"
     ]
   }
 }
