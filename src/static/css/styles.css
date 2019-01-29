@@ -205,7 +205,7 @@ h3 {
   font-family: 'Roboto Slab',sans-serif;
   text-decoration: none;
   background-image: none;
-  text-shadow: 2px 2px #222;
+  text-shadow: 2px 2px 1px #232323
 }
 
 
@@ -258,6 +258,11 @@ h3 {
   box-shadow: 1px 1px #ccc;
 }
 
+.post-body {
+  text-shadow: 1px 0px #eeeeee;
+  color: #222;
+}
+
 .post-item {
  margin-bottom: 0.5em;
 }
@@ -277,6 +282,7 @@ h3 {
   display: inline-block;
   color: #222;
   margin-right: 0.75em;
+  text-shadow: 1px 1px #eee;
 }
 
 .post-link-old {
