@@ -5,11 +5,10 @@
  * @author Lea Verou
  */
 
-code[class*="language-"],
-pre[class*="language-"] {
-	color: black;
-	background: none;
-	text-shadow: 0 1px white;
+code, pre {
+	color: #ccc;
+	background: #1e1e1e;
+	text-shadow: 0 1px black;
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
@@ -28,42 +27,67 @@ pre[class*="language-"] {
 	hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+.hljs-comment {
+color: #5f5a60;
+}
+
+.hljs-name, .hljs-variable {
+  color:#cc6a51;
+}
+
+.hljs-class, .hljs-function {
+  color: #7687a4;
+}
+
+.hljs-keyword {
+ color: #9a859c;
+}
+
+.hljs-string {
+color: #8f9d6e;
+}
+
+.post-body pre::-moz-selection, .post-body pre ::-moz-selection,
+.post-body code::-moz-selection, .post-body code ::-moz-selection {
 	text-shadow: none;
 	background: #b3d4fc;
 }
 
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
+.post-body pre::selection, .post-body pre::selection,
+.post-body code::selection, .post-body code::selection {
 	text-shadow: none;
 	background: #b3d4fc;
 }
 
 @media print {
-	code[class*="language-"],
-	pre[class*="language-"] {
+	.post-body code,
+	.post-body pre {
 		text-shadow: none;
 	}
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+.post-body pre {
 	padding: 1em;
 	margin: .5em 0;
 	overflow: auto;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #f5f2f0;
+:not(pre) > code,
+pre {
+	/* background: #f5f2f0; */
 }
 
 /* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
+:not(pre) > code {
+	padding: .1em .5em;
 	border-radius: .3em;
 	white-space: normal;
+  background-color: #eee;
+  color: #b82519;
+  color:#cc6a51;
+  text-shadow: none;
+
 }
 
 .token.comment,
