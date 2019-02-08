@@ -39,7 +39,7 @@ color: #5f5a60;
   color: #7687a4;
 }
 
-.hljs-keyword {
+ .hljs-keyword, .hljs-attr {
  color: #9a859c;
 }
 
@@ -80,16 +80,20 @@ pre {
 
 /* Inline code */
 :not(pre) > code {
-	padding: .1em .5em;
-	border-radius: .3em;
+  background-color: rgba(27,31,35,.05);
+  border-radius: 3px;
+  font-size: 85%;
+  margin: 0;
+  padding: .2em .4em;
 	white-space: normal;
-  background-color: #eee;
-  color: #b82519;
+  /* color: #b82519; */
   color:#cc6a51;
   text-shadow: none;
 
 }
-
+.hljs-subst {
+  color:#cc6a51;
+}
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -385,4 +389,21 @@ a:hover {
 
 .meta-footer li:last-child::after {
   content: "";
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
 }
