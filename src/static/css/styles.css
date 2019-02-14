@@ -69,7 +69,7 @@ color: #8f9d6e;
 /* Code blocks */
 .post-body pre {
 	padding: 1em;
-	margin: .5em 0;
+	margin: 1em 0;
 	overflow: auto;
 }
 
