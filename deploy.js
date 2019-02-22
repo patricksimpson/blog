@@ -37,7 +37,7 @@ const deploy = async () => {
   await shrink();
 
   function initDeploy() {
-    const seq = [uploadBase, expires, clearCache];
+    const seq = [uploadBase, uploadMeta, expires, clearCache];
     deployStep(seq, 0);
 
     function deployStep(seq, i) {
@@ -50,25 +50,24 @@ const deploy = async () => {
     utils.output(`Deployment Complete`);
   }
 
-  // function uploadMeta() {
-  //   utils.output(`Upload Meta Files`);
-  //   let comm = `${aws} --include='*' --exclude='*.html' --exclude='*.css' --exclude='*.js' --exclude='*.json' --exclude='*.xml' --exclude='*.DS_Store'`
-  //   shell.exec(comm);
-  // }
-
   function uploadBase() {
     utils.output(`Upload Base Files`);
     let comm = `${aws} --content-encoding 'gzip' --exclude='*' --include='*.html' --include='*.json' --include='*.xml'`
     shell.exec(comm);
   }
 
+  function uploadMeta() {
+    utils.output(`Upload Meta Files`);
+    let meta = `${aws} --exclude='*' --include='*.svg' --include='*.png' --include='*.webmanifest' --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000`
+    shell.exec(meta);
+  }
+
   function expires() {
     utils.output(`Upload Static Content and Set Expires`);
     let comm = `${aws} --exclude='*' --include='*.css' --include='*.js' --acl public-read  --metadata-directive REPLACE --content-encoding 'gzip' --cache-control max-age=2592000`;
-    let meta = `${aws} --exclude='*' --include='*.svg' --include='*.png' --include='*.webmanifest' --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000`
     shell.exec(comm);
-    shell.exec(meta);
   }
+
   function clearCache() {
     utils.output(`Clearing CloudFront Cache`);
     if(!isDryRun) {
