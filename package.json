@@ -1,5 +1,5 @@
 {
-  "name": "static-blog",
+  "name": "@patricksimpson/blog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -28,7 +28,7 @@
     "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static",
     "cachebust": "cachebust && npm run meta && npm run copy:dist"
   },
-  "author": "Patrick Simpson",
+  "author": "Patrick Simpson <izerop@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.2.3",

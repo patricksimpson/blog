@@ -3,11 +3,10 @@
    <li class="post-item post-item-front">
     <a href="/posts/<%= post.slug %>" class="post-link">
       <span class="post-title"><%= post.title %></span>
+      <span class="post-date"><%= post.postDate %></span>
     </a>
-    -
-    <span class="post-date"><%= post.date %></span>
   </li>
 <% }) %>
 </ul>
 
-<a href="/">Back to latest</a>
+<a href="/">latest</a>
