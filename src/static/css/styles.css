@@ -4,6 +4,9 @@
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
+html {
+  overflow-y: scroll;
+}
 
 element {
   --main-bg: #fff;
@@ -223,7 +226,6 @@ h3 {
 
 .logo-link-container {
   text-align: left;
-  width: 100%;
 }
 
 .site-title {
