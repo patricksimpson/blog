@@ -226,6 +226,7 @@ h3 {
 
 .logo-link-container {
   text-align: left;
+  min-width: 8em;
 }
 
 .site-title {
