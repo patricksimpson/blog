@@ -206,6 +206,7 @@ h3 {
 .header {
   max-width: 720px;
   margin: 0 auto;
+  padding: 0 0.5rem;
   display: flex;
 }
 
@@ -451,6 +452,10 @@ img {
 
   .main {
     padding: 1rem;
+  }
+
+  .logo-link-container {
+    padding: 0;
   }
 
   .archive .post-date {
