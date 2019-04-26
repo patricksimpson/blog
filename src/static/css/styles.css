@@ -463,3 +463,30 @@ img {
   }
 
 }
+
+.container {
+  display: flex;
+  margin: 1em 0;
+}
+
+.container p, container h2 {
+  margin: 0.5em 0;
+}
+
+.item-avatar {
+  width: 250px;
+}
+
+.item-image {
+  min-width: 100px;
+  margin: auto 1em;
+  margin-left: 0;
+}
+
+.item-text {
+  padding: 0.5em 0;
+}
+
+.item-logo {
+  width: 100px;
+}

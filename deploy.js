@@ -8,11 +8,10 @@ require('dotenv').config();
 const isDryRun = process.env.DRYRUN || false;
 const dryRun = !!isDryRun ? '--dryrun' : '';
 const dist = 'build';
-
-const awsCommand = `aws s3 cp ${dryRun} ${dist}/`;
+const awsCommand = `aws s3 cp ${dryRun} ${dist}/ --profile blog`;
 const awsBucket = `s3://patricksimpson.me/`
 const awsOptions = `--recursive`;
-const aws = `${awsCommand} ${awsBucket} ${awsOptions}`;
+const aws = `${awsCommand} ${awsBucket} ${awsOptions} --profile blog`;
 
 const deploy = async () => {
   const shrink = async () => {
@@ -71,7 +70,7 @@ const deploy = async () => {
   function clearCache() {
     utils.output(`Clearing CloudFront Cache`);
     if(!isDryRun) {
-      shell.exec("aws cloudfront create-invalidation --distribution-id=EHEGKY5SSPRMA --paths '/*'");
+      shell.exec("aws cloudfront create-invalidation --distribution-id=EHEGKY5SSPRMA --paths '/*' --profile blog");
     }
   }
 }
