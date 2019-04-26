@@ -25,7 +25,8 @@
     "copy:lunr": "cp ./bower_components/lunr/lunr.js ./dist/js/lunr.js ",
     "clean:js": "rm -rf ./dist/js && mkdir -p ./dist/js",
     "clean:css": "rm -rf ./dist/css && mkdir -p ./dist/css",
-    "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static",
+    "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static && npm run copy:images",
+    "copy:images": "cp -r ./src/static/img ./build/static",
     "cachebust": "cachebust && npm run meta && npm run copy:dist"
   },
   "author": "Patrick Simpson <izerop@gmail.com>",

@@ -15,7 +15,7 @@ const aws = `${awsCommand} ${awsBucket} ${awsOptions} --profile blog`;
 
 const deploy = async () => {
   const shrink = async () => {
-    compress = await globby([`${dist}/**/*.html`, `${dist}/**/*.css`, `${dist}/**/*.js`, `${dist}/**/*.json`, `${dist}/**/*.xml`]);
+    compress = await globby([`${dist}/**/*.html`, `${dist}/**/*.css`, `${dist}/**/*.js`, `${dist}/**/*.png`, `${dist}/**/*.json`, `${dist}/**/*.xml`]);
     utils.output(`gzipping ${compress.length} files...`);
     let renameRemaining = compress.length;
     compress.forEach(filename => {
@@ -63,7 +63,7 @@ const deploy = async () => {
 
   function expires() {
     utils.output(`Upload Static Content and Set Expires`);
-    let comm = `${aws} --exclude='*' --include='*.css' --include='*.js' --acl public-read  --metadata-directive REPLACE --content-encoding 'gzip' --cache-control max-age=2592000`;
+    let comm = `${aws} --exclude='*' --include='*.css' --include='*.js' --include='*.png' --acl public-read  --metadata-directive REPLACE --content-encoding 'gzip' --cache-control max-age=2592000`;
     shell.exec(comm);
   }
 
