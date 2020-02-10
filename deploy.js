@@ -9,7 +9,7 @@ const isDryRun = process.env.DRYRUN || false;
 const dryRun = !!isDryRun ? '--dryrun' : '';
 const dist = 'build';
 const awsCommand = `aws s3 cp ${dryRun} ${dist}/ --profile blog`;
-const awsBucket = `s3://patricksimpson.me/`
+const awsBucket = `s3://patricksimpson.me/`;
 const awsOptions = `--recursive`;
 const aws = `${awsCommand} ${awsBucket} ${awsOptions} --profile blog`;
 
@@ -51,13 +51,13 @@ const deploy = async () => {
 
   function uploadBase() {
     utils.output(`Upload Base Files`);
-    let comm = `${aws} --content-encoding 'gzip' --exclude='*' --include='*.html' --include='*.json' --include='*.xml'`
+    let comm = `${aws} --content-encoding 'gzip' --exclude='*' --include='*.html' --include='*.json' --include='*.xml'`;
     shell.exec(comm);
   }
 
   function uploadMeta() {
     utils.output(`Upload Meta Files`);
-    let meta = `${aws} --exclude='*' --include='*.svg' --include='*.png' --include='*.webmanifest' --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000`
+    let meta = `${aws} --exclude='*' --include='*.svg' --include='*.png' --include='*.webmanifest' --acl public-read  --metadata-directive REPLACE --cache-control max-age=2592000`;
     shell.exec(meta);
   }
 
