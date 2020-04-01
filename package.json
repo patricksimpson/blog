@@ -32,11 +32,11 @@
   "author": "Patrick Simpson <izerop@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "bower": "^1.8.8",
-    "browserify": "^16.2.3",
+    "browserify": "^16.5.1",
     "ejs": "^2.6.1",
     "express": "^4.17.1",
     "front-matter": "^3.0.2",
