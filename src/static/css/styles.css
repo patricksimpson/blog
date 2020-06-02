@@ -5,6 +5,7 @@
  */
 html {
   overflow-y: scroll;
+  background-color: white;
 }
 
 element {
