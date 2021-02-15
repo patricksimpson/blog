@@ -1,6 +1,5 @@
 /**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
+ * prism.js default theme for JavaScript, CSS and HTML * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
 html {
@@ -200,6 +199,8 @@ h3 {
 
 
 .header-wrap {
+  margin: 0;
+  margin: 1.5rem 0;
   width: 100%;
 }
 
@@ -224,17 +225,37 @@ h3 {
 }
 
 .logo-link-container {
-  text-align: left;
-  min-width: 8em;
+  text-align: center;
 }
 
 .site-title {
-  color: #333;
   font-size: 2em;
   font-family: 'Roboto Slab',sans-serif;
   text-decoration: none;
   background-image: none;
   position: relative;
+  background-color: #363534;
+  box-shadow: 2px 2px #607d8b;
+  color: #eee;
+  border-radius: 50%;
+  padding: 0.5em;
+  top: 1.25rem;
+  transition: all 0.5s ease;
+}
+
+.page-site-title {
+  border-raidus: 0;
+  padding: 0.5em;
+  position: relative;
+  left: 0;
+  top: 0;
+  font-size: 1.5em;
+}
+
+
+.site-title:hover {
+  box-shadow: 2px 2px #999;
+  color: #aaa;
 }
 
 .logo-link {
@@ -265,8 +286,13 @@ h3 {
 
 .nav-link-container {
   width: 100%;
-  text-align: right;
+  text-align: center;
   padding: 0.25em 0;
+}
+
+
+.page-nav-link-container {
+  text-align: right;
 }
 
 .nav-link {
@@ -346,6 +372,7 @@ h3 {
 
 a {
   color: #2e4e71;
+  transition: all 0.5s ease;
 }
 a:hover {
   color: #547498;
@@ -489,4 +516,12 @@ img {
 
 .item-logo {
   width: 100px;
+}
+.intro {
+  margin: 3rem 0 1rem 0;
+  text-align: center;
+}
+
+.intro-sub {
+  color: #555;
 }

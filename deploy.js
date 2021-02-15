@@ -13,7 +13,15 @@ const awsBucket = `s3://patricksimpson.me/`;
 const awsOptions = `--recursive`;
 const aws = `${awsCommand} ${awsBucket} ${awsOptions} --profile blog`;
 
-const deploy = async () => {
+
+const deploy = () => {
+    utils.output(`SYNC Files`);
+    let comm = `rsync -az --progress /home/patricksimpson/projects/blog/build/* patricksimpson@izerop.com:/home/patricksimpson/projects/patricksimpson.me`;
+    shell.exec(comm);
+    utils.output(`Deploy Complete`);
+}
+
+const deployOLD = async () => {
   const shrink = async () => {
     compress = await globby([`${dist}/**/*.html`, `${dist}/**/*.css`, `${dist}/**/*.js`, `${dist}/**/*.png`, `${dist}/**/*.json`, `${dist}/**/*.xml`]);
     utils.output(`gzipping ${compress.length} files...`);

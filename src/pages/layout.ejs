@@ -2,7 +2,7 @@
   let metaSummary = false;
   let metaTitle = title;
    if (!page) { page = 'index'; }
-   if (!title) { title = 'home'; }
+   if (!title) { title = 'Home'; }
    if (title === 'Home') {
        metaTitle = false;
    }
@@ -21,7 +21,11 @@
     <link href="/static/css/styles.css" rel="stylesheet">
   </head>
   <body>
-    <%- include('parts/header'); %>
+      <% if (title == 'Home' || title == 'About') { %>
+        <%- include('parts/home-header'); %>
+      <% } else { %>
+        <%- include('parts/header'); %>
+      <% } %>
     <div class="main">
       <% if (data) { %>
         <%- include(`${page}`, data); %>
