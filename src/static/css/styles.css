@@ -226,6 +226,7 @@ h3 {
 
 .logo-link-container {
   text-align: center;
+  position: relative;
 }
 
 .site-title {
@@ -237,10 +238,10 @@ h3 {
   background-color: #363534;
   box-shadow: 2px 2px #607d8b;
   color: #eee;
-  border-radius: 50%;
+  border-radius: 25%;
   padding: 0.5em;
   top: 1.25rem;
-  transition: color 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .page-site-title {
@@ -256,6 +257,7 @@ h3 {
 .site-title:hover {
   box-shadow: 2px 2px #999;
   color: #aaa;
+  transform: rotate(145deg);
 }
 
 .logo-link {
@@ -520,6 +522,10 @@ img {
 .intro {
   margin: 3rem 0 1rem 0;
   text-align: center;
+}
+
+h1, .post-title {
+  font-family: 'Roboto Slab',sans-serif;
 }
 
 .intro-sub {
