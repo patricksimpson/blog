@@ -240,7 +240,7 @@ h3 {
   border-radius: 50%;
   padding: 0.5em;
   top: 1.25rem;
-  transition: all 0.5s ease;
+  transition: color 0.5s ease;
 }
 
 .page-site-title {
