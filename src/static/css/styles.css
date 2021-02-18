@@ -524,7 +524,7 @@ img {
   text-align: center;
 }
 
-h1, .post-title {
+h1, .post-title, h2 {
   font-family: 'Roboto Slab',sans-serif;
 }
 
