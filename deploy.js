@@ -14,12 +14,38 @@ const awsOptions = `--recursive`;
 const aws = `${awsCommand} ${awsBucket} ${awsOptions} --profile blog`;
 
 
-const deploy = () => {
+const deploy = async () => {
+
+  // const shrink = async () => {
+  //   compress = await globby([`${dist}/**/*.html`, `${dist}/**/*.css`, `${dist}/**/*.js`, `${dist}/**/*.png`, `${dist}/**/*.json`, `${dist}/**/*.xml`]);
+  //   utils.output(`gzipping ${compress.length} files...`);
+  //   let renameRemaining = compress.length;
+  //   compress.forEach(filename => {
+  //     const compress = zlib.createGzip(),
+  //         input = fs.createReadStream(filename),
+  //         output = fs.createWriteStream(filename + '.gz');
+
+  //     input.pipe(compress).pipe(output);
+  //     output.on('close', () => {
+  //       fs.moveSync(`${filename}.gz`, `${filename}`, { overwrite: true });
+  //       if (--renameRemaining <= 0) {
+  //         syncFiles();
+  //       }
+  //     });
+  //   });
+  // };
+
+  // await shrink();
+
+  const syncFiles = () => {
     utils.output(`SYNC Files`);
     let comm = `rsync -az --progress /home/patricksimpson/projects/blog/build/* patricksimpson@izerop.com:/home/patricksimpson/projects/patricksimpson.me`;
     shell.exec(comm);
     utils.output(`Deploy Complete`);
-}
+  };
+
+  syncFiles();
+};
 
 const deployOLD = async () => {
   const shrink = async () => {
