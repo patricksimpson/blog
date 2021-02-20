@@ -21,12 +21,12 @@
     <link href="/static/css/styles.css" rel="stylesheet">
   </head>
   <body>
+    <div class="main">
       <% if (title == 'Home' || title == 'About') { %>
         <%- include('parts/home-header'); %>
       <% } else { %>
         <%- include('parts/header'); %>
       <% } %>
-    <div class="main">
       <% if (data) { %>
         <%- include(`${page}`, data); %>
       <% } else { %>

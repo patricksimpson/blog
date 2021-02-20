@@ -242,7 +242,7 @@ h3 {
   border-radius: 25%;
   padding: 0.5em;
   top: 1.25rem;
-  transition: all 1.75s ease-in-out;
+  transition: transform 0.5s ease-in-out;
   display: inline-block;
   position: relative;
   width: 2em;
@@ -268,7 +268,7 @@ h3 {
 .site-title:hover {
   box-shadow: 2px 2px #999;
   color: #aaa;
-  transform: rotate(360deg);
+  transform: rotate(45deg);
 }
 
 .logo-link {
@@ -378,7 +378,7 @@ h3 {
 
 a {
   color: #2e4e71;
-  transition: all 0.5s ease;
+  transition: color 0.5s ease;
 }
 a:hover {
   color: #547498;
