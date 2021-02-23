@@ -19,8 +19,9 @@
     "meta": "cp ./src/meta/*.* ./build",
     "minify": " npm run transpile && npm run minify:js && npm run minify:css",
     "minify:css": "npm run clean:css && uglifycss ./src/static/css/styles.css --output ./dist/css/styles.css",
-    "minify:js": "npm run minify:search && npm run minify:lunr",
+    "minify:js": "npm run minify:search && npm run minify:lunr && npm run minify:mini",
     "minify:search": "uglifyjs dist/js/search.js -o ./dist/js/search.js",
+    "minify:mini": "cp ./src/static/js/mini.js ./dist/js/mini.js",
     "minify:lunr": "npm run copy:lunr && uglifyjs ./dist/js/lunr.js -o ./dist/js/lunr.js",
     "copy:lunr": "cp ./bower_components/lunr/lunr.js ./dist/js/lunr.js ",
     "clean:js": "rm -rf ./dist/js && mkdir -p ./dist/js",
@@ -71,7 +72,8 @@
   "cachebust": {
     "source": [
       "dist/css/styles.css",
-      "dist/js/search.js"
+      "dist/js/search.js",
+      "dist/js/mini.js"
     ],
     "target": [
       "build/**/index.html"
