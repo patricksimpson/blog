@@ -23,11 +23,11 @@
           minute: 'numeric'
         };
         let timestamp = new Date(Date.parse(line.created_at)).toLocaleDateString('en-US', options);
-        time.innerHTML = `${timestamp}`;
+        time.innerHTML = `Posted ${timestamp} - by <a href='https://social.basementcomputer.site/@patrick'>@patrick</a> - `;
         time.classList.add('post-date', 'mini-date');
 
         let perma = document.createElement('a');
-        perma.innerHTML = '️link ↗';
+        perma.innerHTML = 'post ️link ↗';
         perma.href = line.url;
         perma.classList.add('mini-link');
 
