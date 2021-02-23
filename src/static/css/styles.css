@@ -559,28 +559,6 @@ h1, .post-title, h2 {
     width: 2.25em;
     margin-right: 1em;
  }
-
-@media screen and (min-width: 460px) {
-
-  .item-image {
-    min-width: 100px;
-    margin: auto 1em;
-    margin-left: 0;
-  }
-
-  .avatar {
-    float: left;
-  }
-
-
-.container {
-  display: flex;
-  margin: 1em 0;
-}
-    .header-wrap {
-    margin: 1.5rem 0;
-    }
-}
 .mini-blog-container {
   padding: 0;
   margin: 0;
@@ -589,7 +567,7 @@ h1, .post-title, h2 {
 
 .mini-blog-container li {
   list-style-type: none;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .mini-blog-container .content {
@@ -598,6 +576,7 @@ h1, .post-title, h2 {
 .mini-blog-container .avatar {
   max-width: 1.15rem;
   margin-right: 0.5rem;
+  margin-top:2px;
 }
 
 .mini-date {
@@ -610,9 +589,35 @@ h1, .post-title, h2 {
   font-size: 0.85rem;
   margin: 0 1rem;
   text-decoration: none;
+  float: right;
 }
 
 .mini-link:hover {
   cursor: pointer;
 }
 
+.mini-blog-container p {
+  margin: 0.5rem 0;
+}
+
+@media screen and (min-width: 460px) {
+  .item-image {
+    min-width: 100px;
+    margin: auto 1em;
+    margin-left: 0;
+  }
+  .avatar {
+    float: left;
+  }
+  .container {
+    display: flex;
+    margin: 1em 0;
+    }
+  .header-wrap {
+    margin: 1.5rem 0;
+  }
+
+  .mini-link {
+    float: none;
+  }
+}

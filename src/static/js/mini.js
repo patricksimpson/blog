@@ -14,30 +14,30 @@
         content.innerHTML = line.content;
         content.classList.add('content');
 
-        let avatar = document.createElement('img');
-        avatar.src = line.account.avatar;
-        avatar.classList.add('avatar', 'post-avatar');
-
-        let profileLink = document.createElement('a');
-        profileLink.href = line.account.url;
-        profileLink.appendChild(avatar);
-
         let time = document.createElement('span');
-        time.innerHTML = line.created_at;
+        let options = {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric'
+        };
+        let timestamp = new Date(Date.parse(line.created_at)).toLocaleDateString('en-US', options);
+        time.innerHTML = `${timestamp}`;
         time.classList.add('post-date', 'mini-date');
 
         let perma = document.createElement('a');
-        perma.innerHTML = ' ️link ↗' 
+        perma.innerHTML = '️link ↗';
         perma.href = line.url;
         perma.classList.add('mini-link');
 
         let meta = document.createElement('div');
-        meta.appendChild(profileLink);
         meta.appendChild(time);
         meta.appendChild(perma);
         meta.classList.add('meta');
 
-        li.appendChild(meta).appendChild(content);
+        li.appendChild(content);
+        li.appendChild(meta);
         container.appendChild(li);
       });
     }
