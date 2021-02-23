@@ -622,3 +622,7 @@ h1, .post-title, h2 {
     float: none;
   }
 }
+.content-image {
+  max-width: 40em;
+  max-height: 20em;
+}

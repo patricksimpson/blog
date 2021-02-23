@@ -2,6 +2,7 @@
   if (window.fetch) {
     const url = '/static/js/mini.json';
     function microBlog(json) {
+      console.log(json);
       const container = document.getElementById('mini-blog-content');
 
       const loader = document.querySelectorAll('.loading');
@@ -36,6 +37,13 @@
         meta.appendChild(time);
         meta.appendChild(perma);
         meta.classList.add('meta');
+
+        if (line.media_attachments.length > 0) {
+          let imgAdd = document.createElement('img');
+          imgAdd.src = line.media_attachments[0].url;
+          imgAdd.classList.add('content-image');
+          content.appendChild(imgAdd);
+        }
 
         li.appendChild(content);
         li.appendChild(meta);
