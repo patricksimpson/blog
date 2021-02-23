@@ -2,7 +2,6 @@
   if (window.fetch) {
     const url = '/static/js/mini.json';
     function microBlog(json) {
-      console.log(json);
       const container = document.getElementById('mini-blog-content');
 
       const loader = document.querySelectorAll('.loading');
