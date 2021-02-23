@@ -565,6 +565,10 @@ h1, .post-title, h2 {
   margin-top: 1.5rem;
 }
 
+.mini-blog-container .meta a {
+  color: #6187b1;
+}
+
 .mini-blog-container li {
   list-style-type: none;
   margin-bottom: 2rem;
@@ -585,10 +589,8 @@ h1, .post-title, h2 {
 }
 .mini-link {
   display: inline-block;
-  color: #9cd;
   font-size: 0.85rem;
-  text-decoration: none;
-  float: right;
+  margin-left: 4px;
 }
 
 .mini-link:hover {

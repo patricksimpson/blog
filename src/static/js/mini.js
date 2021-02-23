@@ -27,7 +27,8 @@
         time.classList.add('post-date', 'mini-date');
 
         let perma = document.createElement('a');
-        perma.innerHTML = 'post ️link ↗';
+        perma.innerHTML = 'post link';
+
         perma.href = line.url;
         perma.classList.add('mini-link');
 
