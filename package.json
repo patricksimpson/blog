@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "LOCAL=true run-p dev server meta",
     "dev": "nodemon --watch ~/posts --watch src --watch index.js -e css,ejs,js,md index.js",
-    "build": "node index.js && npm run meta",
+    "build": "node index.js && npm run meta && npm run build:micro",
     "build:production": "npm run build && npm run minify && npm run cachebust",
     "server": "LOCAL=true node server.js",
     "deploy:deploy": "npm run build:deploy",
@@ -28,7 +28,10 @@
     "clean:css": "rm -rf ./dist/css && mkdir -p ./dist/css",
     "copy:dist": "rm -rf ./build/static && cp -r ./dist ./build && mv ./build/dist ./build/static && npm run copy:images",
     "copy:images": "cp -r ./src/static/img ./build/static",
-    "cachebust": "cachebust && npm run meta && npm run copy:dist"
+    "copy:microblog": "cp ./src/static/js/mini.json ./dist/js/mini.json",
+    "cachebust": "cachebust && npm run meta && npm run copy:dist",
+    "build:micro": "npm run getPosts && npm run copy:microblog",
+    "getPosts": "curl -X GET 'https://social.basementcomputer.site/api/v1/accounts/2418/statuses?limit=5' -H \"Accept: application/json\" > ./src/static/js/mini.json"
   },
   "author": "Patrick Simpson <izerop@gmail.com>",
   "license": "ISC",
