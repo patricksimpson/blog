@@ -1,5 +1,5 @@
 <div class="logo-link-container">
-    <a href="/" class="site-title">
+    <a href="/" class="site-title hattip">
       <img src="/static/img/PS.svg" type="image/svg+xml"/>
     </a>
 </div>
@@ -19,3 +19,10 @@
     </div>
   </div>
 </div>
+<script>
+ let fun = ['hattip', 'explode', 'wiggle', 'bounce'];
+ let logo = document.querySelectorAll('.site-title')[0];
+ let pick = fun[Math.floor(Math.random() * 4)];
+ logo.classList.remove('hattip');
+ logo.classList.add(pick);
+</script>
