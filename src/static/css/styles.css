@@ -5,6 +5,14 @@
 html {
   overflow-y: scroll;
   background-color: white;
+  color: #222;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  html {
+    background-color: #222;
+    color: #eee;
+  }
 }
 
 element {
@@ -312,6 +320,7 @@ h3 {
   text-align: right;
 }
 
+
 .nav-link {
   color: #333;
   display: inline-block;
@@ -354,6 +363,7 @@ h3 {
   color: #222;
   margin-right: 0.75em;
 }
+
 
 .post-link-old {
   padding: 0.25em 0;
@@ -405,6 +415,31 @@ a:hover {
 
 .archive li a:hover .post-title {
   color: #547498;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+ .nav-link {
+   color: #ccc;
+ }
+
+ .post-body {
+   color: #eee;
+ }
+ .post-title {
+   color: #eee;
+ }
+ a {
+   color: #728da9;
+ }
+  .archive li a.post-link {
+    border-bottom: 1px solid #333;
+  }
+  .archive li a.post-link:hover {
+    border-bottom: 1px solid #555;
+  }
+ .archive li a .post-title {
+  color: #728da9;
+ }
 }
 
 .tag-title {
