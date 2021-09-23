@@ -8,7 +8,7 @@
       loader[0].style = 'display:none;';
 
       if (container.classList.contains('home')) {
-        json = json.slice(0, 2);
+        json = json.slice(0, 3);
       }
       json.forEach((line) => {
         let li = document.createElement('li');
