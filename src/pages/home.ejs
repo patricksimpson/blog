@@ -1,10 +1,34 @@
-<% data.posts.forEach((post) => { %>
-  <div class="post-item post-item-front">
-    <a href="/posts/<%= post.slug %>" class="post-link">
-      <h2 class="post-title"><%= post.title %></h2>
-      <span class="post-date"><%= post.postDate %></span>
-      <p><%= post.summary %></p>
-    </a>
+<div>
+
+  <h2>Latest</h2>
+  <h3 class="post-title"><%= post.title %></h3>
+  <div class="post-meta">
+    <img class="avatar post-avatar" src="/static/img/avatar.png" alt="me" title="Patrick Simpson">
+    <div class="post-date"><%= post.postDate %></div>
+    <div class="post-tags">
+    <% if(post.tags) {
+        post.tags.forEach((t, i) => {
+    %>
+          <a href="/tag/<%= t %>/"><%= t %></a><% if(i < post.tags.length - 1) {%>,<% } %>
+    <% });
+      }
+    %>
+    </div>
   </div>
-<% }) %>
-<a href="/posts">older</a> | <a href="/micro">micro</a>
+  <div class="post-body" >
+  <%- post.data %>
+    <p>
+        <a href="/posts/<%=post.slug %>">Continue reading...</a>
+    </p>
+  </div>
+  <hr>
+  <h3>Micro</h3>
+<div class="mini-blog">
+    <div class="loading" style="display:block">Loading...</div>
+    <div class="noresults" style="display:none;">Something went wrong loading content from mastodon.</div>
+    <ul id="mini-blog-content" class="mini-blog-container home">
+    </ul>
+</div>
+<a href="/micro">More micro posts</a>
+<script async src="/static/js/mini.js"></script>
+</div>

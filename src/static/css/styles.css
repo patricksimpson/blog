@@ -33,6 +33,10 @@ code, pre {
 	hyphens: none;
 }
 
+.nav {
+  margin-bottom: 0.5rem;
+}
+
 .hljs-comment {
 color: #5f5a60;
 }
@@ -311,7 +315,7 @@ h3 {
   color: #333;
   display: inline-block;
   margin: 0;
-  padding: 0 0.5rem;
+  padding: 0 0.75rem 0 0;
   background-image: none;
 }
 
