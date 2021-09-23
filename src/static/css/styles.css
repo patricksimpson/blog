@@ -679,3 +679,7 @@ h1, .post-title, h2 {
   transform: rotate(45deg);
   display: inline-block;
 }
+
+.box {
+  margin-top: 2rem;
+}

@@ -27,11 +27,13 @@
       <% } else { %>
         <%- include('parts/header'); %>
       <% } %>
+      <div class="box">
       <% if (data) { %>
         <%- include(`${page}`, data); %>
       <% } else { %>
         <%- include(`${page}`); %>
       <% } %>
+      </div>
     </div>
 
     <%- include('parts/footer'); %>
