@@ -42,7 +42,7 @@
     "bower": "^1.8.8",
     "browserify": "^16.5.1",
     "ejs": "^2.6.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "front-matter": "^3.0.2",
     "fs-extra": "^8.0.1",
     "glob": "^7.1.4",
